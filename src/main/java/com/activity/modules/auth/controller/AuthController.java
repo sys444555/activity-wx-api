@@ -57,7 +57,7 @@ public class AuthController {
     /**
      * 获取用户userInfo
      */
-    @RequestMapping(value = "/api/user/getUserInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/getUserInfo", method = RequestMethod.POST)
     public ResponseUtil getUserInfo(String appid, String secret, String js_code, String grantType){
 
         Map map = new HashMap();

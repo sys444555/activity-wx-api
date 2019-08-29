@@ -41,8 +41,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         //根据openId判断数据库是否存在
         Integer openIdAccount = userMapper.getCount(openId);
         System.out.println("openIdAccount = " + openIdAccount);
+
         if(openIdAccount != null && openIdAccount != 0){
             wrapper.eq("open_id", openId);
+            BASE64Encoder encoder = new BASE64Encoder();
+            byte[] bytes = new byte[0];
+            try {
+                bytes = userEntity.getNickName().getBytes("UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            String nameEncode = encoder.encode(bytes);
+            System.out.println("nameEncode = " + nameEncode);
+            userEntity.setNickName(nameEncode);
             Integer update = userMapper.update(userEntity, wrapper);
             return update;
         }else {
