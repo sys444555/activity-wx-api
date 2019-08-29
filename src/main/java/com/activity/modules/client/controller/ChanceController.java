@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/chance")
+@RequestMapping("/chance/api")
 public class ChanceController{
 
     @Autowired

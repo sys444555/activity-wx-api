@@ -3,12 +3,9 @@ server:
     uri-encoding: UTF-8
     max-threads: 1000
     min-spare-threads: 30
-  port: 443
+  port: 80
   connection-timeout: 5000ms
-  ssl:
-    key-store: classpath:www.gzjckc.cn.pfx
-    key-store-password: 547ng19q5047807
-    keyStoreType: PKCS12
+
 
 
 spring:
@@ -39,7 +36,7 @@ spring:
   # 缓存
   redis:
     open: true # 是否开启redis缓存  true开启   false关闭
-    database: 0
+    database: 1
     host: 120.78.157.175
     port: 6379
     password: jcredis   # 密码（默认为空）

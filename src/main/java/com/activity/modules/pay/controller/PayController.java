@@ -5,6 +5,7 @@ import com.activity.common.utils.ResponseUtil;
 import com.activity.common.utils.WXPayUtil;
 import com.activity.config.WechatConfig;
 import com.activity.modules.pay.entity.PayEntity;
+import com.activity.modules.pay.entity.PayReultEntity;
 import com.activity.modules.pay.service.PayService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +32,7 @@ import java.util.Map;
  */
 @Api(tags = "支付模块")
 @RestController
-
+@RequestMapping("/wx")
 public class PayController {
 
     @Autowired
@@ -44,7 +45,7 @@ public class PayController {
      * @return
      */
     @ApiOperation(value = "请求支付接口")
-    @RequestMapping(value = "/wxPay", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/wxPay", method = RequestMethod.POST)
     public ResponseUtil wxPay(HttpServletRequest request, PayEntity payEntity) {
         System.out.println("payEntity = " + payEntity);
         Map<String, Object> map = payService.wxPay(request, payEntity);
@@ -52,7 +53,7 @@ public class PayController {
     }
 
     //这里是支付回调接口，微信支付成功后会自动调用
-    @RequestMapping(value = "/wxNotify", method = RequestMethod.POST)
+    @RequestMapping(value = "/wxPay/wxNotify", method = RequestMethod.POST)
     public void wxNotify(HttpServletRequest request, HttpServletResponse response) throws Exception {
         System.out.println(new Date());
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -67,10 +68,6 @@ public class PayController {
         String resXml = "";
 
         Map<String, String> map = PayUtil.doXMLParse(notityXml);
-        for(Map.Entry<String, String> entry1 : map.entrySet()){
-            System.out.println("entry1 = " + entry1.getKey());
-            System.out.println("entry1.getValue() = " + entry1.getValue());
-        }
         String returnCode = (String) map.get("return_code");
         if ("SUCCESS".equals(returnCode)) {
             System.out.println("进来了");
@@ -79,16 +76,16 @@ public class PayController {
             String prestr = PayUtil.createLinkString(validParams);
             System.out.println("prestr = " + prestr);
             //根据微信官网的介绍，此处不仅对回调的参数进行验签，还需要对返回的金额与系统订单的金额进行比对等
-            /*if (PayUtil.verify(prestr, (String) map.get("sign"), WechatConfig.key, "utf-8")) {
-                *//**此处添加自己的业务逻辑代码start**//*
+            /**if (PayUtil.verify(prestr, (String) map.get("sign"), WechatConfig.key, "utf-8")) {
+                //**此处添加自己的业务逻辑代码start**//*
                 System.out.println("验证成功了 = ");
                 //注意要判断微信支付重复回调，支付成功后微信会重复的进行回调
 
-                *//**此处添加自己的业务逻辑代码end**//*
+                //**此处添加自己的业务逻辑代码end**//*
                 //通知微信服务器已经支付成功
                 resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
                         + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
-            }*/
+            }**/
             if (WXPayUtil.isSignatureValid(notityXml, WechatConfig.key) ) {
                 /**此处添加自己的业
                  * 至于返回结果可自己看着判断返回
@@ -99,6 +96,27 @@ public class PayController {
                  *
                  *
                  * 务逻辑代码start**/
+                //插入支付订单
+                PayReultEntity payReultEntity = new PayReultEntity();
+                payReultEntity.setTransactionId(map.get("transaction_id"));
+                payReultEntity.setNonceStr(map.get("nonce_str"));
+                payReultEntity.setBankType(map.get("bank_type"));
+                payReultEntity.setOpenid(map.get("openid"));
+                payReultEntity.setSign(map.get("sign"));
+                payReultEntity.setFeeType(map.get("fee_type"));
+                payReultEntity.setMchId(map.get("mch_id"));
+                payReultEntity.setCashFee(map.get("cash_fee"));
+                payReultEntity.setOutTradeNo(map.get("out_trade_no"));
+                payReultEntity.setAppid(map.get("appid"));
+                payReultEntity.setTotalFee(map.get("total_fee"));
+                payReultEntity.setTradeType(map.get("trade_type"));
+                payReultEntity.setResultCode(map.get("result_code"));
+                payReultEntity.setTimeEnd(map.get("time_end"));
+                payReultEntity.setIsSubscribe(map.get("is_subscribe"));
+                payReultEntity.setReturnCode(map.get("return_code"));
+                payService.createPayMessage(payReultEntity);
+                System.out.println("生成订单啦");
+
                 resXml = "<xml>" + "<return_code><![CDATA[SUCCESS]]></return_code>"
                         + "<return_msg><![CDATA[OK]]></return_msg>" + "</xml> ";
 

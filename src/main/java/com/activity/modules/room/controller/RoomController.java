@@ -26,7 +26,7 @@ import java.util.Map;
  * @version:
  */
 @RestController
-@RequestMapping("/wx/room")
+@RequestMapping("/wx/api/room")
 public class RoomController {
 
     @Autowired

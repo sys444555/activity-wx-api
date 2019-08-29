@@ -1,7 +1,10 @@
 package com.activity.modules.pay.mapper;
 
 import com.activity.modules.pay.entity.PayEntity;
+import com.activity.modules.pay.entity.PayReultEntity;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author ：fenghuang
@@ -11,4 +14,10 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @version:
  */
 public interface PayMapper extends BaseMapper<PayEntity> {
+
+    public Integer createPayMessage(PayReultEntity payReultEntity);
+
+    public Integer updateOrderStatus(@Param(value = "transactionId") String transactionId,
+                                     @Param(value = "outTradeNo") String outTradeNo,
+                                     @Param(value = "openid") String openid);
 }

@@ -25,7 +25,7 @@ import java.util.List;
  * @version:
  */
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/client/api")
 @Api(description = "客户")
 public class ClientController {
 

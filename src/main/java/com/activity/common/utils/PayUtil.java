@@ -1,12 +1,10 @@
 package com.activity.common.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang.StringUtils;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -177,7 +175,6 @@ public class PayUtil {
      *
      * @param strxml
      * @return
-     * @throws org.jdom2.JDOMException
      * @throws IOException
      */
     public static Map doXMLParse(String strxml) throws Exception {

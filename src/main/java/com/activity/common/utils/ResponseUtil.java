@@ -1,8 +1,6 @@
 package com.activity.common.utils;
 
 import java.util.HashMap;
-import java.util.Map;
-
 
 /**
  * @author ：fenghuang
@@ -39,7 +37,12 @@ public class ResponseUtil extends HashMap<String, Object>{
         return res;
     }
 
-
+    public static ResponseUtil success(Integer code, String msg){
+        ResponseUtil res = new ResponseUtil();
+        res.put("code", code);
+        res.put("msg", msg);
+        return res;
+    }
 
     public static ResponseUtil success(Object data){
         ResponseUtil res = new ResponseUtil();

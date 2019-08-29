@@ -2,7 +2,6 @@ package com.activity.modules.pay.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,7 +16,6 @@ import java.io.Serializable;
  * @version:
  */
 @Data
-@TableName("pay")
 public class PayEntity implements Serializable {
     /**
      *
