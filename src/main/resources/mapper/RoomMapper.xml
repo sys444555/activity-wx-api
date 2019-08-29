@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.activity.modules.room.mapper.RoomMapper">
+
+    <resultMap id="resultMap" type="com.activity.modules.room.entity.RoomVO">
+
+        <id column="id" property="id"/>
+        <result column="room_name" property="roomName"/>
+        <result column="room_type" property="roomType"/>
+        <result column="room_focus" property="roomFocus"/>
+        <result column="room_volume" property="roomVolume"/>
+        <result column="room_join_account" property="roomJoinAccount"/>
+        <result column="address" property="address"/>
+        <result column="start_time" property="startTime"/>
+        <result column="deadline" property="deadline"/>
+        <result column="end_time" property="endTime"/>
+        <result column="deposit" property="deposit"/>
+        <result column="room_describtion" property="roomDescribtion"/>
+        <result column="phone" property="phone"/>
+        <result column="name" property="name"/>
+        <result column="email" property="email"/>
+        <result column="shop_name" property="shopName"/>
+        <result column="menu_describtion" property="menuDescribtion"/>
+        <result column="total_price" property="totalPrice"/>
+        <result column="room_topic" property="roomTopic"/>
+        <result column="member" property="member"/>
+        <result column="car_array" property="carArray"/>
+    </resultMap>
+
+    <resultMap id="resultMapPO" type="com.activity.modules.room.entity.po.RoomPO" extends="resultMap">
+        <result column="open_id" property="openId"/>
+        <result column="status" property="status"/>
+        <result column="user_role" property="userRole"/>
+    </resultMap>
+
+    <select id="roomList" resultMap="resultMapPO" statementType="PREPARED">
+        SELECT a.id,a.room_name,a.room_type,a.room_focus,a.room_volume,a.room_join_account,
+        a.address,a.start_time,a.deadline,a.end_time,a.deposit,b.status,a.room_describtion,a.phone,
+        a.name,a.email,b.open_id,a.shop_name,a.menu_describtion,a.total_price,a.room_topic,a.member,a.car_array,b.user_role
+        FROM room a ,room_user b
+        WHERE a.id = b.room_id AND b.status != 1 AND b.user_role = 0
+        ORDER BY a.create_time DESC
+    </select>
+
+    <insert id="createRoom" parameterType="com.activity.modules.room.entity.RoomVO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO room(id,room_name,room_type,room_volume,
+        address,start_time,end_time,deposit,room_describtion,
+        phone,name,email,shop_name,menu_describtion,total_price,room_topic,member,car_array)
+        VALUES(#{id},#{roomName},#{roomType},#{roomVolume},
+        #{address},#{startTime},#{endTime},#{deposit},#{roomDescribtion},#{phone},#{name},#{email},
+        #{shopName},#{menuDescribtion},#{totalPrice},#{roomTopic},#{member},#{carArray}
+        )
+    </insert>
+
+    <insert id="createRoomer">
+        INSERT INTO room_user(room_id,open_id)
+        VALUES(#{roomId},#{openId})
+    </insert>
+
+    <select id="hasRoom" parameterType="String" resultType="Integer">
+        SELECT COUNT(*) FROM user a RIGHT JOIN room_user b ON a.open_id = b.open_id
+        WHERE a.open_id = #{openId}
+    </select>
+
+    <select id="getUserRooms" resultMap="resultMapPO" statementType="PREPARED">
+        SELECT a.id,a.room_name,a.room_type,a.room_focus,a.room_volume,a.room_join_account,
+        a.address,a.start_time,a.deadline,a.end_time,a.deposit,b.status,a.room_describtion,a.phone,
+        a.name,a.email,a.shop_name,a.menu_describtion,a.total_price,a.room_topic,a.member,a.car_array
+        FROM room a LEFT JOIN room_user b
+        ON a.id = b.room_id WHERE b.open_id = #{openId}
+        <if test="status != 0">
+            AND  b.status = #{status}
+        </if>
+         ORDER BY a.create_time DESC
+    </select>
+
+    <update id="updateRoomStatus" statementType="PREPARED">
+        UPDATE room_user t
+        <set>
+            <if test="status != null">
+               t.status = #{status}
+            </if>
+        </set>
+         WHERE t.room_id= #{roomId} AND t.open_id = #{openId}
+    </update>
+
+
+    <update id="changeUserAccount" >
+        UPDATE room
+        <set>
+            <if test="roomId != null" >
+                  room_join_account = #{roomJoinAccount}
+            </if>
+        </set>
+        WHERE id = #{roomId}
+    </update>
+
+    <insert id="createJoiner">
+        INSERT INTO room_user(room_id,open_id,user_role,status)
+        VALUES(#{roomId},#{openId},1,2)
+    </insert>
+
+
+    <select id="isPay" resultType="Integer">
+        SELECT COUNT(*) FROM room_user WHERE room_id = #{roomId} AND open_id = #{openId}
+    </select>
+</mapper>
+
