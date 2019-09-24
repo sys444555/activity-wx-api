@@ -12,4 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface BusinessMapper {
 
     void insert(BusinessPo businessPo);
+
+    Integer selectByPhone(BusinessPo businessPo);
 }

@@ -15,4 +15,12 @@
         )
     </insert>
 
+    <select id="selectByPhone" resultType="java.lang.Integer" parameterType="com.activity.modules.business.entity.po.BusinessPo">
+        SELECT
+            COUNT(*)
+        FROM
+            `business`
+        WHERE
+            business_phone = #{business_phone}
+    </select>
 </mapper>

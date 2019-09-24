@@ -10,4 +10,6 @@ import com.activity.modules.business.entity.po.BusinessPo;
 public interface BusinessService {
 
     void insertAll(BusinessPo businessPo);
+
+    Integer findByPhone(BusinessPo businessPo);
 }

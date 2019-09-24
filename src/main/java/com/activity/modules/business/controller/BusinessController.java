@@ -1,5 +1,6 @@
 package com.activity.modules.business.controller;
 
+import com.activity.common.exception.JcException;
 import com.activity.common.utils.ResponseUtil;
 import com.activity.modules.business.entity.po.BusinessPo;
 import com.activity.modules.business.service.BusinessService;
@@ -21,8 +22,8 @@ public class BusinessController {
     BusinessService joinService;
 
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
-    public ResponseUtil insertJoinEntity(BusinessPo businessPo){
-        System.err.println("============================insertJoinEntity");
+    public ResponseUtil insertJoinEntity(BusinessPo businessPo) throws JcException {
+        System.err.println("============================insertBusinessEntity");
         System.err.println(businessPo);
         joinService.insertAll(businessPo);
         return ResponseUtil.success();
