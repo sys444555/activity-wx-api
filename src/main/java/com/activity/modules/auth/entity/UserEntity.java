@@ -1,5 +1,6 @@
 package com.activity.modules.auth.entity;
 
+import com.activity.common.utils.BaseCodeUtil;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -55,5 +56,7 @@ public class UserEntity implements Serializable {
     @ApiModelProperty(value ="会员状态",name="vip")
     @TableField("vip")
     private Integer vip;
+
+
 
 }
