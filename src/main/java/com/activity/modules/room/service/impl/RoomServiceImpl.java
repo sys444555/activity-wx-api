@@ -2,16 +2,26 @@ package com.activity.modules.room.service.impl;
 
 
 import com.activity.common.exception.JcException;
+import com.activity.common.utils.AMapUtils;
+import com.activity.common.utils.LngLat;
+import com.activity.modules.business.entity.po.BusinessPo;
+import com.activity.modules.business.mapper.BusinessMapper;
+import com.activity.modules.pay.entity.PayEntity;
+import com.activity.modules.pay.mapper.PayMapper;
+import com.activity.modules.room.entity.RoomDetailVO;
 import com.activity.modules.room.entity.RoomVO;
 import com.activity.modules.room.entity.po.RoomPO;
+import com.activity.modules.room.entity.po.RoomPic;
 import com.activity.modules.room.mapper.RoomMapper;
 import com.activity.modules.room.service.RoomService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import sun.misc.BASE64Decoder;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -27,10 +37,45 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, RoomVO> implements 
     @Resource
     private RoomMapper roomMapper;
 
+    @Resource
+    private BusinessMapper businessMapper;
+
+    @Resource
+    private PayMapper payMapper;
+
+    DecimalFormat df = new DecimalFormat("#.0");
+
     @Override
-    public List<RoomPO> selectPage() {
+    public List<RoomPO> selectPage(Double latitude , Double longitude) {
         List<RoomPO> list = roomMapper.roomList();
-       return list;
+
+        for(int i = 0; i<list.size(); i++){
+
+            LngLat start = null;
+            LngLat end = null;
+
+            RoomPO roomPO = list.get(i);
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
+            roomPO.setStartTimeStr(sdf.format(roomPO.getStartTime()));
+
+            //'聊天', '游戏', '推广', '招聘', '合伙人'
+            switch (roomPO.getRoomType()){
+                case "1" : roomPO.setTypeStr("聊天");break;
+                case "2" : roomPO.setTypeStr("游戏");break;
+                case "3" : roomPO.setTypeStr("推广");break;
+                case "4" : roomPO.setTypeStr("招聘");break;
+                case "5" : roomPO.setTypeStr("合伙人");break;
+                default:  roomPO.setTypeStr("读取失败");break;
+            }
+
+            start = new LngLat(longitude,latitude);
+            //当前店铺的经纬度
+            end = new LngLat(roomPO.getBusinessPo().getLongitude(),roomPO.getBusinessPo().getLatitude());
+
+            roomPO.setKm(Double.parseDouble(df.format((AMapUtils.calculateLineDistance(start,end)/1000))));
+
+        }
+        return list;
     }
 
     @Override
@@ -103,6 +148,45 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, RoomVO> implements 
         }else {
             return false;
         }
+    }
+
+    @Override
+    public RoomDetailVO getRoomDetailById(Integer id ,String openId) {
+
+        Integer payStatus = 99;
+
+        List<RoomVO> roomVO = roomMapper.selectList(new EntityWrapper<RoomVO>().eq("id",id));
+
+        List<RoomPic> roomPic = roomMapper.selectPic(id);
+
+        BusinessPo businessPo = businessMapper.selectById(roomVO.get(0).getJoinId());
+
+        roomVO.get(0).setBusinessPo(businessPo);
+
+        List<PayEntity> payEntities = payMapper.selectList(new EntityWrapper<PayEntity>().eq("open_id", openId).eq("room_id", id));
+
+        if(payEntities.size() == 1){
+            PayEntity payEntity = payEntities.get(0);
+            //返回 0则未支付， 返回1则代表支付了，99代表没操作
+            payStatus = payEntity.getPayStatus();
+        }else if(payEntities.size() == 0){
+            // -1 则代表数据多条或者没有数据，则均为数据异常
+            payStatus = 0;
+        }else{
+            // -1 则代表数据多条，则均为数据异常
+            payStatus = -1;
+        }
+
+        return new RoomDetailVO(roomVO.get(0),roomPic,payStatus);
+    }
+
+    @Override
+    public Integer checkPwd(String id, String pwd) {
+        List<RoomVO> roomVOS = roomMapper.selectList(new EntityWrapper<RoomVO>().eq("id",id));
+        if(roomVOS.size() != 1){
+            return 0;
+        }
+        return  roomVOS.get(0).getPassword().equals(DigestUtils.md5DigestAsHex(pwd.getBytes())) ? 1 : 2;
     }
 
 }

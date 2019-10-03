@@ -2,6 +2,7 @@ package com.activity.modules.pay.service;
 
 import com.activity.modules.pay.entity.PayEntity;
 import com.activity.modules.pay.entity.PayReultEntity;
+import com.activity.modules.room.entity.RoomDetailVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -18,4 +19,8 @@ public interface PayService {
     public Map<String, Object> wxPay(HttpServletRequest request, PayEntity payEntity);
 
     public void createPayMessage(PayReultEntity payReultEntity);
+
+    public Integer orderCreate(PayEntity payEntity);
+
+    public void updatePayStatus(Integer roomId , String openId);
 }

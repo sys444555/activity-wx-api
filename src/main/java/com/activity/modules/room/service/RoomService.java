@@ -1,5 +1,6 @@
 package com.activity.modules.room.service;
 
+import com.activity.modules.room.entity.RoomDetailVO;
 import com.activity.modules.room.entity.RoomVO;
 import com.activity.modules.room.entity.po.RoomPO;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface RoomService {
 
-    public List<RoomPO> selectPage();
+    public List<RoomPO> selectPage(Double latitude , Double longitude);
 
     public void createRoom(RoomVO roomVO, String openId);
 
@@ -29,4 +30,10 @@ public interface RoomService {
     public void changeUserAccount(String openId, Integer id, Integer roomJoinAccount);
 
     public boolean isPay(Integer roomId, String openId);
+
+    public RoomDetailVO getRoomDetailById(Integer id,String openId);
+
+    public Integer checkPwd(String id, String pwd);
+
+
 }

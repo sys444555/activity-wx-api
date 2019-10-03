@@ -9,6 +9,7 @@ import com.activity.modules.pay.entity.PayReultEntity;
 import com.activity.modules.pay.service.PayService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -134,6 +135,16 @@ public class PayController {
     }
 
 
+    @RequestMapping("/api/order/create")
+    public ResponseUtil orderCreate (PayEntity payEntity){
+        Integer status = payService.orderCreate(payEntity);
+        return ResponseUtil.success(status);
+    }
 
 
+    @RequestMapping("/api/order/updatePayStatus")
+    public ResponseUtil updatePayStatus (Integer roomId,String openId){
+        payService.updatePayStatus(roomId,openId);
+        return ResponseUtil.success();
+    }
 }

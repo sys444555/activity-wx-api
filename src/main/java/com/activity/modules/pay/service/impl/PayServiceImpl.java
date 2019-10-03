@@ -1,5 +1,6 @@
 package com.activity.modules.pay.service.impl;
 
+import com.activity.modules.room.entity.RoomDetailVO;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.activity.common.exception.JcException;
 import com.activity.common.utils.HttpRequest;
@@ -135,4 +136,17 @@ public class PayServiceImpl extends ServiceImpl<PayMapper, PayEntity> implements
         }
 
     }
+
+    @Override
+    public Integer orderCreate(PayEntity payEntity) {
+        Integer status = payMapper.insert(payEntity);
+        return status == 1 ? 1 : 0;
+    }
+
+    @Override
+    public void updatePayStatus(Integer roomId,String openId) {
+        payMapper.updatePayStatus(roomId,openId);
+    }
+
+
 }

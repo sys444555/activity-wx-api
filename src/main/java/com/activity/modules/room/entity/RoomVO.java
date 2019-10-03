@@ -1,5 +1,6 @@
 package com.activity.modules.room.entity;
 
+import com.activity.modules.business.entity.po.BusinessPo;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -7,6 +8,7 @@ import com.baomidou.mybatisplus.enums.IdType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -22,6 +24,7 @@ import java.util.Date;
 @Data
 @ApiModel("活动房间实体类")
 @TableName("room")
+@Repository
 public class RoomVO implements Serializable {
 
     @ApiModelProperty(value = "自增ID",name = "id")
@@ -107,5 +110,28 @@ public class RoomVO implements Serializable {
     @ApiModelProperty(value = "套餐",name = "carArray")
     @TableField("car_array")
     private String carArray;
+
+
+    @ApiModelProperty(value = "图片",name = "photo")
+    @TableField("photo")
+    private String photo;
+
+    private String star;
+
+    @TableField(exist = false)
+    private String startTimeStr;
+
+    @TableField(exist = false)
+    private String typeStr;
+
+    private String password;
+
+    private Integer joinId;
+
+    @TableField(exist = false)
+    private Double km;
+
+    @TableField(exist = false)
+    private BusinessPo businessPo;
 
 }

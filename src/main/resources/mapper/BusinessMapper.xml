@@ -23,4 +23,8 @@
         WHERE
             business_phone = #{business_phone}
     </select>
+
+    <select id="selectById" resultType="com.activity.modules.business.entity.po.BusinessPo" parameterType="java.lang.Integer">
+        SELECT * FROM  `business` WHERE id = #{id}
+    </select>
 </mapper>

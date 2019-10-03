@@ -1,5 +1,6 @@
 package com.activity.modules.room.entity.po;
 
+import com.activity.modules.business.entity.po.BusinessPo;
 import com.activity.modules.room.entity.RoomVO;
 import com.baomidou.mybatisplus.annotations.TableField;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,4 +28,7 @@ public class RoomPO extends RoomVO {
     @ApiModelProperty(value = "用户角色",name = "userRole")
     @TableField("user_role")
     private Integer userRole;
+
+    @TableField(exist = false)
+    private BusinessPo businessPo;
 }

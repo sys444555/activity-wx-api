@@ -1,6 +1,7 @@
 package com.activity.modules.business.mapper;
 
 import com.activity.modules.business.entity.po.BusinessPo;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -14,4 +15,6 @@ public interface BusinessMapper {
     void insert(BusinessPo businessPo);
 
     Integer selectByPhone(BusinessPo businessPo);
+
+    BusinessPo selectById(Integer id);
 }
