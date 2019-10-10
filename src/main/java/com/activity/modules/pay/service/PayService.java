@@ -2,8 +2,6 @@ package com.activity.modules.pay.service;
 
 import com.activity.modules.pay.entity.PayEntity;
 import com.activity.modules.pay.entity.PayReultEntity;
-import com.activity.modules.room.entity.RoomDetailVO;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 

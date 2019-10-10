@@ -1,14 +1,10 @@
 package com.activity.modules.room.controller;
 
 import com.activity.common.utils.ResponseUtil;
-import com.activity.modules.client.entity.ChanceEntity;
-import com.activity.modules.room.entity.RoomDetailVO;
+
 import com.activity.modules.room.entity.RoomVO;
 import com.activity.modules.room.entity.po.RoomPO;
 import com.activity.modules.room.service.RoomService;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,12 +29,12 @@ public class RoomController {
     /**
      * 活动房间列表查询
      * @return
-     */
+     *//*
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public ResponseUtil roomList(Double latitude , Double longitude){
         List<RoomPO> pageList = roomService.selectPage(latitude,longitude);
         return ResponseUtil.success(pageList);
-    }
+    }*/
 
     /**
      *  新增活动房间
@@ -108,11 +104,11 @@ public class RoomController {
         return ResponseUtil.success(map);
     }
 
-    @RequestMapping(value = "/getRoomDetail",method = RequestMethod.GET)
+/*    @RequestMapping(value = "/getRoomDetail",method = RequestMethod.GET)
     public ResponseUtil getRoomDetail(@RequestParam("roomId") Integer id,@RequestParam("openId") String openId){
         RoomDetailVO roomDetailById = roomService.getRoomDetailById(id,openId);
         return ResponseUtil.success(roomDetailById);
-    }
+    }*/
 
     @RequestMapping(value = "/checkPwd" , method = RequestMethod.POST)
     public ResponseUtil checkPwd(String id,String pwd){

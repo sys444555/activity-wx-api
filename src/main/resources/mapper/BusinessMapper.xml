@@ -9,8 +9,8 @@
             business_store,business_addr,business_message,
             latitude,longitude
         )values(
-            #{business_name},#{business_phone},#{business_qq},
-            #{business_store},#{business_addr},#{business_message},
+            #{businessName},#{businessPhone},#{businessQq},
+            #{businessStore},#{businessAddr},#{businessMessage},
             #{latitude},#{longitude}
         )
     </insert>
@@ -21,7 +21,7 @@
         FROM
             `business`
         WHERE
-            business_phone = #{business_phone}
+            business_phone = #{businessPhone}
     </select>
 
     <select id="selectById" resultType="com.activity.modules.business.entity.po.BusinessPo" parameterType="java.lang.Integer">

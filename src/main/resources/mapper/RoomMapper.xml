@@ -131,8 +131,8 @@
         SELECT COUNT(*) FROM room_user WHERE room_id = #{roomId} AND open_id = #{openId}
     </select>
 
-    <select id="selectPic" resultType="com.activity.modules.room.entity.po.RoomPic" >
+    <!--<select id="selectPic" resultType="com.activity.modules.room.entity.po.RoomPic" >
         SELECT * FROM room_pic where room_id = #{id} and type='banner'
-    </select>
+    </select>-->
 </mapper>
 

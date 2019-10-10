@@ -1,6 +1,5 @@
 package com.activity.modules.pay.service.impl;
 
-import com.activity.modules.room.entity.RoomDetailVO;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.activity.common.exception.JcException;
 import com.activity.common.utils.HttpRequest;
