@@ -4,8 +4,11 @@ package com.activity.modules.room.service.impl;
 import com.activity.common.exception.JcException;
 import com.activity.common.utils.AMapUtils;
 import com.activity.common.utils.LngLat;
+import com.activity.modules.business.entity.po.BusinessPo;
 import com.activity.modules.business.mapper.BusinessMapper;
+import com.activity.modules.pay.entity.PayEntity;
 import com.activity.modules.pay.mapper.PayMapper;
+import com.activity.modules.room.entity.RoomDetailVO;
 import com.activity.modules.room.entity.RoomVO;
 import com.activity.modules.room.entity.po.RoomPO;
 import com.activity.modules.room.mapper.RoomMapper;
@@ -146,8 +149,8 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, RoomVO> implements 
         }
     }
 
-    /*@Override
-    public RoomDetailVO getRoomDetailById(Integer id ,String openId) {
+    @Override
+    public RoomDetailVO getRoomDetailById(Integer id , String openId) {
 
         Integer payStatus = 99;
 
@@ -174,7 +177,7 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, RoomVO> implements 
         }
 
         return new RoomDetailVO(roomVO.get(0),roomPic,payStatus);
-    }*/
+    }
 
     @Override
     public Integer checkPwd(String id, String pwd) {

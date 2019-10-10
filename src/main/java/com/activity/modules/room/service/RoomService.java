@@ -1,6 +1,7 @@
 package com.activity.modules.room.service;
 
 
+import com.activity.modules.room.entity.RoomDetailVO;
 import com.activity.modules.room.entity.RoomVO;
 import com.activity.modules.room.entity.po.RoomPO;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -31,7 +32,7 @@ public interface RoomService {
 
     public boolean isPay(Integer roomId, String openId);
 
-    //public RoomDetailVO getRoomDetailById(Integer id,String openId);
+    public RoomDetailVO getRoomDetailById(Integer id, String openId);
 
     public Integer checkPwd(String id, String pwd);
 

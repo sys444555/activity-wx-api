@@ -2,6 +2,7 @@ package com.activity.modules.room.controller;
 
 import com.activity.common.utils.ResponseUtil;
 
+import com.activity.modules.room.entity.RoomDetailVO;
 import com.activity.modules.room.entity.RoomVO;
 import com.activity.modules.room.entity.po.RoomPO;
 import com.activity.modules.room.service.RoomService;
@@ -103,7 +104,7 @@ public class RoomController {
         map.put("isPay", isPay);
         return ResponseUtil.success(map);
     }
-    
+
     @RequestMapping(value = "/getRoomDetail",method = RequestMethod.GET)
     public ResponseUtil getRoomDetail(@RequestParam("roomId") Integer id,@RequestParam("openId") String openId){
         RoomDetailVO roomDetailById = roomService.getRoomDetailById(id,openId);
