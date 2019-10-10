@@ -29,12 +29,12 @@ public class RoomController {
     /**
      * 活动房间列表查询
      * @return
-     *//*
+     */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public ResponseUtil roomList(Double latitude , Double longitude){
         List<RoomPO> pageList = roomService.selectPage(latitude,longitude);
         return ResponseUtil.success(pageList);
-    }*/
+    }
 
     /**
      *  新增活动房间
@@ -103,12 +103,12 @@ public class RoomController {
         map.put("isPay", isPay);
         return ResponseUtil.success(map);
     }
-
-/*    @RequestMapping(value = "/getRoomDetail",method = RequestMethod.GET)
+    
+    @RequestMapping(value = "/getRoomDetail",method = RequestMethod.GET)
     public ResponseUtil getRoomDetail(@RequestParam("roomId") Integer id,@RequestParam("openId") String openId){
         RoomDetailVO roomDetailById = roomService.getRoomDetailById(id,openId);
         return ResponseUtil.success(roomDetailById);
-    }*/
+    }
 
     @RequestMapping(value = "/checkPwd" , method = RequestMethod.POST)
     public ResponseUtil checkPwd(String id,String pwd){

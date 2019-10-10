@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface RoomService {
 
-    //public List<RoomPO> selectPage(Double latitude , Double longitude);
+    public List<RoomPO> selectPage(Double latitude , Double longitude);
 
     public void createRoom(RoomVO roomVO, String openId);
 
