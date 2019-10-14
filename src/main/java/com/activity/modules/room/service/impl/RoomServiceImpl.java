@@ -188,4 +188,37 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, RoomVO> implements 
         return  roomVOS.get(0).getPassword().equals(DigestUtils.md5DigestAsHex(pwd.getBytes())) ? 1 : 2;
     }
 
+    @Override
+    public List<RoomPO> selectPageById(Integer roomId,Double latitude , Double longitude) {
+        List<RoomPO> list = roomMapper.roomListById(roomId);
+
+        for(int i = 0; i<list.size(); i++){
+
+            LngLat start = null;
+            LngLat end = null;
+
+            RoomPO roomPO = list.get(i);
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
+            roomPO.setStartTimeStr(sdf.format(roomPO.getStartTime()));
+
+            //'聊天', '游戏', '推广', '招聘', '合伙人'
+            switch (roomPO.getRoomType()){
+                case "1" : roomPO.setTypeStr("聊天");break;
+                case "2" : roomPO.setTypeStr("游戏");break;
+                case "3" : roomPO.setTypeStr("推广");break;
+                case "4" : roomPO.setTypeStr("招聘");break;
+                case "5" : roomPO.setTypeStr("合伙人");break;
+                default:  roomPO.setTypeStr("读取失败");break;
+            }
+
+            start = new LngLat(longitude,latitude);
+            //当前店铺的经纬度
+            end = new LngLat(roomPO.getBusinessPo().getLongitude(),roomPO.getBusinessPo().getLatitude());
+
+            roomPO.setKm(Double.parseDouble(df.format((AMapUtils.calculateLineDistance(start,end)/1000))));
+
+        }
+        return list;
+    }
+
 }
