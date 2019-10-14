@@ -2,6 +2,7 @@ package com.activity.modules.room.mapper;
 
 import com.activity.modules.room.entity.RoomVO;
 import com.activity.modules.room.entity.po.RoomPO;
+import com.activity.modules.room.entity.po.RoomPic;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -41,5 +42,5 @@ public interface RoomMapper extends BaseMapper<RoomVO> {
     Integer isPay(@Param(value = "roomId") Integer roomId,
                   @Param(value = "openId") String openId);
 
-    //List<RoomPic> selectPic(Integer id);
+    List<RoomPic> selectPic(Integer id);
 }

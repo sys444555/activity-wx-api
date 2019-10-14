@@ -103,9 +103,6 @@ public class RoomVO implements Serializable {
     @TableField("room_topic")
     private String roomTopic;
 
-    @ApiModelProperty(value = "辉园",name = "member")
-    @TableField("member")
-    private Integer member;
 
     @ApiModelProperty(value = "套餐",name = "carArray")
     @TableField("car_array")
@@ -125,6 +122,9 @@ public class RoomVO implements Serializable {
     private String typeStr;
 
     private String password;
+
+    private Integer isPasswordOut;
+
 
     private Integer joinId;
 

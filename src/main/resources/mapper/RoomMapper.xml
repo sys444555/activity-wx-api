@@ -24,11 +24,11 @@
         <result column="menu_describtion" property="menuDescribtion"/>
         <result column="total_price" property="totalPrice"/>
         <result column="room_topic" property="roomTopic"/>
-        <result column="member" property="member"/>
         <result column="car_array" property="carArray"/>
         <result column="photo" property="photo"/>
         <result column="star" property="star"/>
         <result column="password" property="password"/>
+        <result column="is_password_out" property="isPasswordOut"/>
         <result column="join_id" property="joinId"/>
         <association property="businessPo" javaType="com.activity.modules.business.entity.po.BusinessPo">
             <id column="id" property="id"></id>
@@ -62,7 +62,7 @@
        SELECT a.id,a.room_name,a.room_type,a.room_focus,a.room_volume,a.room_join_account,
         a.address,a.start_time,a.deadline,a.end_time,a.deposit,b.status,a.room_describtion,a.phone,
         a.name,a.email,b.open_id,a.shop_name,a.menu_describtion,a.total_price,a.room_topic,a.member,a.car_array,b.user_role,
-        a.photo,a.star,a.password,a.join_id,bu.business_name,bu.business_phone,bu.business_qq,bu.business_store,bu.business_addr,bu.business_message,bu.latitude,bu.longitude
+        a.photo,a.star,a.password,a.is_password_out,a.join_id,bu.business_name,bu.business_phone,bu.business_qq,bu.business_store,bu.business_addr,bu.business_message,bu.latitude,bu.longitude
         FROM room a ,room_user b , business bu
         WHERE a.id = b.room_id AND a.join_id = bu.id AND b.status != 1 AND b.user_role = 0
         ORDER BY a.create_time DESC
@@ -71,10 +71,10 @@
     <insert id="createRoom" parameterType="com.activity.modules.room.entity.RoomVO" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO room(id,room_name,room_type,room_volume,
         address,start_time,end_time,deposit,room_describtion,
-        phone,name,email,shop_name,menu_describtion,total_price,room_topic,member,car_array)
+        phone,name,email,shop_name,menu_describtion,total_price,room_topic,car_array,password,is_password_out)
         VALUES(#{id},#{roomName},#{roomType},#{roomVolume},
         #{address},#{startTime},#{endTime},#{deposit},#{roomDescribtion},#{phone},#{name},#{email},
-        #{shopName},#{menuDescribtion},#{totalPrice},#{roomTopic},#{member},#{carArray}
+        #{shopName},#{menuDescribtion},#{totalPrice},#{roomTopic},#{carArray},#{password},#{isPasswordOut}
         )
     </insert>
 
@@ -131,8 +131,8 @@
         SELECT COUNT(*) FROM room_user WHERE room_id = #{roomId} AND open_id = #{openId}
     </select>
 
-    <!--<select id="selectPic" resultType="com.activity.modules.room.entity.po.RoomPic" >
+    <select id="selectPic" resultType="com.activity.modules.room.entity.po.RoomPic" >
         SELECT * FROM room_pic where room_id = #{id} and type='banner'
-    </select>-->
+    </select>
 </mapper>
 
