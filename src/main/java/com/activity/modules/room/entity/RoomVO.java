@@ -125,6 +125,9 @@ public class RoomVO implements Serializable {
 
     private Integer isPasswordOut;
 
+    private Integer isPayPre;
+
+    private BigDecimal amount;
 
     private Integer joinId;
 

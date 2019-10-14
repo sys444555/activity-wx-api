@@ -11,6 +11,7 @@ import com.activity.modules.pay.mapper.PayMapper;
 import com.activity.modules.room.entity.RoomDetailVO;
 import com.activity.modules.room.entity.RoomVO;
 import com.activity.modules.room.entity.po.RoomPO;
+import com.activity.modules.room.entity.po.RoomPic;
 import com.activity.modules.room.mapper.RoomMapper;
 import com.activity.modules.room.service.RoomService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
