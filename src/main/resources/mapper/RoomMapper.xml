@@ -134,5 +134,23 @@
     <select id="selectPic" resultType="com.activity.modules.room.entity.po.RoomPic" >
         SELECT * FROM room_pic where room_id = #{id} and type='banner'
     </select>
+
+    <select id="roomListById" resultMap="resultMapPO" statementType="PREPARED">
+--         SELECT a.id,a.room_name,a.room_type,a.room_focus,a.room_volume,a.room_join_account,
+--         a.address,a.start_time,a.deadline,a.end_time,a.deposit,b.status,a.room_describtion,a.phone,
+--         a.name,a.email,b.open_id,a.shop_name,a.menu_describtion,a.total_price,a.room_topic,a.member,a.car_array,b.user_role,
+--         a.photo,a.star,a.password,a.join_id
+--         FROM room a ,room_user b
+--         WHERE a.id = b.room_id AND b.status != 1 AND b.user_role = 0
+--         ORDER BY a.create_time DESC
+
+       SELECT a.id,a.room_name,a.room_type,a.room_focus,a.room_volume,a.room_join_account,
+        a.address,a.start_time,a.deadline,a.end_time,a.deposit,b.status,a.room_describtion,a.phone,
+        a.name,a.email,b.open_id,a.shop_name,a.menu_describtion,a.total_price,a.room_topic,a.member,a.car_array,b.user_role,
+        a.photo,a.star,a.password,a.join_id,bu.business_name,bu.business_phone,bu.business_qq,bu.business_store,bu.business_addr,bu.business_message,bu.latitude,bu.longitude
+        FROM room a ,room_user b , business bu
+        WHERE a.id = b.room_id AND a.join_id = bu.id AND b.status != 1 AND b.user_role = 0 AND a.id = #{roomId}
+        ORDER BY a.create_time DESC
+    </select>
 </mapper>
 

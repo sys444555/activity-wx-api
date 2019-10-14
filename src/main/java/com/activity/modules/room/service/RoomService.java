@@ -35,5 +35,5 @@ public interface RoomService {
 
     public Integer checkPwd(String id, String pwd);
 
-
+    public List<RoomPO> selectPageById(Integer roomId, Double latitude, Double longitude);
 }

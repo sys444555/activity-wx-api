@@ -119,4 +119,15 @@ public class RoomController {
         Integer status = roomService.checkPwd(id,pwd);
         return ResponseUtil.success(status);
     }
+
+    /**
+     * 活动房间列表查询
+     * @return
+     */
+    @RequestMapping(value = "/listById",method = RequestMethod.GET)
+    public ResponseUtil roomListById(Integer roomId , Double latitude , Double longitude){
+        List<RoomPO> pageList = roomService.selectPageById(roomId,latitude,longitude);
+        return ResponseUtil.success(pageList);
+    }
+
 }

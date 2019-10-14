@@ -43,4 +43,6 @@ public interface RoomMapper extends BaseMapper<RoomVO> {
                   @Param(value = "openId") String openId);
 
     List<RoomPic> selectPic(Integer id);
+
+    List<RoomPO> roomListById(Integer roomId);
 }
