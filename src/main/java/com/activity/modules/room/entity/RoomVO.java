@@ -121,6 +121,8 @@ public class RoomVO implements Serializable {
     @TableField(exist = false)
     private String typeStr;
 
+    private String plaintext;
+
     private String password;
 
     private Integer isPasswordOut;

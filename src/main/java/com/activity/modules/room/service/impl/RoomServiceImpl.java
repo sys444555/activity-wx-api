@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
+import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -74,19 +75,29 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, RoomVO> implements 
 
             roomPO.setKm(Double.parseDouble(df.format((AMapUtils.calculateLineDistance(start,end)/1000))));
 
+            //密码回显
+            if(roomPO.getIsPasswordOut() == 0){
+                roomPO.setPassword(roomPO.getPlaintext());
+            }
+
         }
         return list;
     }
 
+
     @Override
     public void createRoom(RoomVO roomVO, String openId) {
         //获取新增后返回的id值
+
+        roomVO.setPassword(DigestUtils.md5DigestAsHex(roomVO.getPlaintext().getBytes()));
+
         Integer roomId = roomMapper.createRoom(roomVO);
         System.out.println("roomId = " + roomVO.getId());
         if(roomId == null || roomId == 0){
             throw new JcException("新建房间失败");
         }
         roomMapper.createRoomer(roomVO.getId(), openId);
+        roomMapper.createPic(roomVO.getId());
 
     }
 
