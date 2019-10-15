@@ -126,5 +126,5 @@ public class RoomController {
         List<RoomPO> pageList = roomService.selectPageById(roomId,latitude,longitude);
         return ResponseUtil.success(pageList);
     }
-    
+
 }

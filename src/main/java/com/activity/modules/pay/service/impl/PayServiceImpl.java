@@ -1,5 +1,6 @@
 package com.activity.modules.pay.service.impl;
 
+import com.activity.modules.room.mapper.RoomMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.activity.common.exception.JcException;
 import com.activity.common.utils.HttpRequest;
@@ -29,6 +30,9 @@ public class PayServiceImpl extends ServiceImpl<PayMapper, PayEntity> implements
 
     @Resource
     private PayMapper payMapper;
+
+    @Resource
+    private RoomMapper roomMapper;
 
     /**
      *  微信统一下单
@@ -144,7 +148,12 @@ public class PayServiceImpl extends ServiceImpl<PayMapper, PayEntity> implements
 
     @Override
     public void updatePayStatus(Integer roomId,String openId) {
+
         payMapper.updatePayStatus(roomId,openId);
+
+        roomMapper.updateRoomJoinAccount(roomId);
+
+
     }
 
 

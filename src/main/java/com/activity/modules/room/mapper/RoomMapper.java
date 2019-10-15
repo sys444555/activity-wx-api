@@ -47,4 +47,6 @@ public interface RoomMapper extends BaseMapper<RoomVO> {
     List<RoomPO> roomListById(Integer roomId);
 
     void createPic(@Param(value = "roomId") Integer roomId);
+
+    void updateRoomJoinAccount(@Param(value = "roomId") Integer roomId);
 }

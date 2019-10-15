@@ -119,6 +119,11 @@
     </update>
 
 
+    <update id="updateRoomJoinAccount">
+        UPDATE room SET room_join_account = room_join_account + 1 WHERE id = #{roomId}
+    </update>
+
+
     <update id="changeUserAccount" >
         UPDATE room
         <set>
